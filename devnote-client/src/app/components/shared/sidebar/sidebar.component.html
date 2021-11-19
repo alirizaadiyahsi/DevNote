@@ -1,0 +1,10 @@
+<p-treeTable [value]="sidebarItems" id="sidebarMenu" selectionMode="single" [(selection)]="selectedSidebarItem" dataKey="name">
+  <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+    <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
+      <td style="padding: 0;">
+        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+        {{rowData.name}}
+      </td>
+    </tr>
+  </ng-template>
+</p-treeTable>

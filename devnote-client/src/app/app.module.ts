@@ -9,9 +9,15 @@ import { AppComponent } from './app.component';
 import {TreeTableModule} from 'primeng/treetable';
 import {MenubarModule} from 'primeng/menubar';
 
+// components
+import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
+import { NavbarComponent } from './components/shared/navbar/navbar.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SidebarComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
