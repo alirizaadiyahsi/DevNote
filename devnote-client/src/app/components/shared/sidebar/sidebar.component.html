@@ -13,6 +13,13 @@
       </td>
     </tr>
   </ng-template>
+  <ng-template pTemplate="footer" let-columns>
+    <tr>
+      <td class="p-0">
+        <button pButton label="Add New" icon="pi pi-plus" class="p-button-text w-full text-left"></button>
+      </td>
+    </tr>
+  </ng-template>
 </p-treeTable>
 
 <p-contextMenu #sidebarContextMenu [model]="sidebarContextMenuItems"></p-contextMenu>

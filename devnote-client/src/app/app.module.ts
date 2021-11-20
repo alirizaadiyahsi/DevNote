@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import {TreeTableModule} from 'primeng/treetable';
 import {MenubarModule} from 'primeng/menubar';
 import {ContextMenuModule} from "primeng/contextmenu";
+import {ButtonModule} from "primeng/button";
 
 // components
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
@@ -26,7 +27,8 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
         BrowserAnimationsModule,
         TreeTableModule,
         MenubarModule,
-        ContextMenuModule
+        ContextMenuModule,
+        ButtonModule
     ],
   providers: [],
   bootstrap: [AppComponent]
