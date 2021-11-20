@@ -1,19 +1,20 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+
+// components
+import {SidebarComponent} from './components/shared/sidebar/sidebar.component';
+import {NavbarComponent} from './components/shared/navbar/navbar.component';
 
 // primeNG
 import {TreeTableModule} from 'primeng/treetable';
 import {MenubarModule} from 'primeng/menubar';
 import {ContextMenuModule} from "primeng/contextmenu";
 import {ButtonModule} from "primeng/button";
-
-// components
-import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
-import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import {InputTextModule} from "primeng/inputtext";
 
 @NgModule({
   declarations: [
@@ -21,16 +22,18 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
     SidebarComponent,
     NavbarComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        TreeTableModule,
-        MenubarModule,
-        ContextMenuModule,
-        ButtonModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    TreeTableModule,
+    MenubarModule,
+    ContextMenuModule,
+    ButtonModule,
+    InputTextModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
