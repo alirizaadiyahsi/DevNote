@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {TreeNode} from "primeng/api";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MenuItem, TreeNode} from "primeng/api";
 
 @Component({
   selector: 'app-sidebar',
@@ -10,8 +10,14 @@ export class SidebarComponent implements OnInit {
 
   sidebarItems: TreeNode[];
   selectedSidebarItem: any;
+  sidebarContextMenuItems: MenuItem[];
 
   constructor() {
+    this.sidebarContextMenuItems = [
+      { label: 'View', icon: 'pi pi-search', command: (event) => console.log(event) },
+      { label: 'Toggle', icon: 'pi pi-sort', command: (event) => console.log(event) }
+    ];
+
     this.sidebarItems = [
       {
         data: {
@@ -101,5 +107,4 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

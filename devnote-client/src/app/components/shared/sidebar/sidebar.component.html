@@ -1,6 +1,12 @@
-<p-treeTable [value]="sidebarItems" id="sidebarMenu" selectionMode="single" [(selection)]="selectedSidebarItem" dataKey="name">
+<p-treeTable [value]="sidebarItems"
+             id="sidebarMenu"
+             selectionMode="single"
+             [(selection)]="selectedSidebarItem"
+             [(contextMenuSelection)]="selectedSidebarItem"
+             [contextMenu]="sidebarContextMenu"
+             dataKey="name">
   <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
-    <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
+    <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode" [ttContextMenuRow]="rowNode">
       <td style="padding: 0;">
         <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
         {{rowData.name}}
@@ -8,3 +14,5 @@
     </tr>
   </ng-template>
 </p-treeTable>
+
+<p-contextMenu #sidebarContextMenu [model]="sidebarContextMenuItems"></p-contextMenu>
