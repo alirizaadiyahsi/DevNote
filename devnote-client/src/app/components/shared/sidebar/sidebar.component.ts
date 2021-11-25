@@ -1,110 +1,100 @@
-import {Component, OnInit} from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    ViewChild
+} from '@angular/core';
 import {MenuItem, TreeNode} from "primeng/api";
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.less']
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.less']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
 
-  sidebarItems: TreeNode[];
-  selectedSidebarItem: any;
-  sidebarContextMenuItems: MenuItem[];
+    @ViewChild('newRootItemInput') newRootItemInput: ElementRef | undefined;
 
-  constructor() {
-    this.sidebarContextMenuItems = [
-      { label: 'View', icon: 'pi pi-search', command: (event) => console.log(event) },
-      { label: 'Toggle', icon: 'pi pi-sort', command: (event) => console.log(event) }
-    ];
+    sidebarItems: TreeNode[];
+    selectedSidebarItem: any;
+    sidebarContextMenuItems: MenuItem[];
+    newRootItemInputVisible = false;
+    selectNewRootItemInput = true;
+    newRootItemInputValue = "New Item";
 
-    this.sidebarItems = [
-      {
-        data: {
-          name: "Documents",
-          size: "75kb",
-          type: "Folder"
-        },
-        expanded:true,
-        children: [
-          {
+    constructor() {
+        this.sidebarContextMenuItems = [
+            {label: 'Add Sub Item', icon: 'pi pi-plus', command: (event) => console.log(event)},
+            {label: 'Remove Item', icon: 'pi pi-trash', command: (event) => console.log(event)}
+        ];
+
+        this.sidebarItems = [{
             data: {
-              name: "Work",
-              size: "55kb",
-              type: "Folder"
+                name: "Documents"
             },
-            expanded:true,
+            expanded: true,
             children: [
-              {
-                data: {
-                  name: "Expenses.doc",
-                  size: "30kb",
-                  type: "Document"
+                {
+                    data: {
+                        name: "Work"
+                    },
+                    expanded: true,
+                    children: [
+                        {
+                            data: {
+                                name: "Expenses.doc"
+                            }
+                        },
+                        {
+                            data: {
+                                name: "Resume.doc"
+                            }
+                        }
+                    ]
+                },
+                {
+                    data: {
+                        name: "Home"
+                    },
+                    expanded: true,
+                    children: [
+                        {
+                            data: {
+                                name: "Invoices"
+                            }
+                        }
+                    ]
                 }
-              },
-              {
-                data: {
-                  name: "Resume.doc",
-                  size: "25kb",
-                  type: "Resume"
-                }
-              }
             ]
-          },
-          {
-            data: {
-              name: "Home",
-              size: "20kb",
-              type: "Folder"
-            },
-            expanded:true,
-            children: [
-              {
-                data: {
-                  name: "Invoices",
-                  size: "20kb",
-                  type: "Text"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      {
-        data: {
-          name: "Pictures",
-          size: "150kb",
-          type: "Folder"
-        },
-        expanded:true,
-        children: [
-          {
-            data: {
-              name: "barcelona.jpg",
-              size: "90kb",
-              type: "Picture"
-            }
-          },
-          {
-            data: {
-              name: "primeui.png",
-              size: "30kb",
-              type: "Picture"
-            }
-          },
-          {
-            data: {
-              name: "optimus.jpg",
-              size: "30kb",
-              type: "Picture"
-            }
-          }
-        ]
-      }
-    ];
+        }
+        ];
+    }
 
-  }
+    ngAfterViewChecked() {
+        if (this.selectNewRootItemInput) {
+            this.newRootItemInput?.nativeElement.focus();
+            this.newRootItemInput?.nativeElement.select();
+        }
+    }
 
-  ngOnInit(): void {
-  }
+    addNewRoot() {
+        this.newRootItemInputVisible = true;
+    }
+
+    removeNewRootItem() {
+        this.newRootItemInputVisible = false;
+        this.selectNewRootItemInput = true;
+        this.newRootItemInputValue = "New Item";
+    }
+
+    createNewRootItem() {
+        this.sidebarItems = [{
+            data: {
+                name: this.newRootItemInputValue,
+            }
+        }, ...this.sidebarItems]
+    }
+
+    disableNewRootItemInputSelection() {
+        this.selectNewRootItemInput = false;
+    }
 }

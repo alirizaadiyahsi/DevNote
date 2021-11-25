@@ -5,21 +5,37 @@
              [(contextMenuSelection)]="selectedSidebarItem"
              [contextMenu]="sidebarContextMenu"
              dataKey="name">
-  <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
-    <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode" [ttContextMenuRow]="rowNode">
-      <td style="padding: 0;">
-        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-        {{rowData.name}}
-      </td>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="footer" let-columns>
-    <tr>
-      <td class="p-0">
-        <button pButton label="Add New" icon="pi pi-plus" class="p-button-text w-full text-left"></button>
-      </td>
-    </tr>
-  </ng-template>
+    <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode" [ttContextMenuRow]="rowNode">
+            <td style="padding: 0;">
+                <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                {{rowData.name}}
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="footer" let-columns>
+        <tr *ngIf="newRootItemInputVisible">
+            <td>
+                <div class="p-inputgroup">
+                    <input type="text"
+                           #newRootItemInput
+                           pInputText
+                           class="p-inputtext-sm w-full"
+                           placeholder="New Item"
+                           [(ngModel)]="newRootItemInputValue"
+                           (keydown.enter)="createNewRootItem()"
+                           (keypress)="disableNewRootItemInputSelection()">
+                    <button type="button" pButton icon="pi pi-times" (click)="removeNewRootItem()"></button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="p-0">
+                <button pButton label="Add New" icon="pi pi-plus" class="p-button-text w-full text-left"
+                        (click)="addNewRoot()"></button>
+            </td>
+        </tr>
+    </ng-template>
 </p-treeTable>
 
 <p-contextMenu #sidebarContextMenu [model]="sidebarContextMenuItems"></p-contextMenu>
