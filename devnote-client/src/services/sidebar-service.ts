@@ -5,8 +5,14 @@ import {SidebarItem} from "../data-access/entities/sidebar-item";
 export class SidebarService {
     getAll = liveQuery(() => devNoteDb.sidebarItems.toArray());
 
-    add(item: SidebarItem) {
-        devNoteDb.sidebarItems.add(item);
+    add(sidebarItem: SidebarItem) {
+        return devNoteDb.sidebarItems.filter(item => item.data.name === sidebarItem.data.name).count().then(count => {
+            if (count === 0) {
+                devNoteDb.sidebarItems.add(sidebarItem);
+            } else {
+                throw new Error("Sidebar item already exists!");
+            }
+        });
     }
 
     remove(id: number) {

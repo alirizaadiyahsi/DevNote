@@ -6,11 +6,19 @@
              [contextMenu]="sidebarContextMenu"
              dataKey="name">
     <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
-        <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode" [ttContextMenuRow]="rowNode">
+        <tr [ttRow]="rowNode"
+            [ttSelectableRow]="rowNode"
+            [ttContextMenuRow]="rowNode"
+            class="sidebar-item">
             <td style="padding: 0;" class="flex align-items-center">
                 <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
                 {{rowData.name}}
-                <button pButton type="button" icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger ml-auto" (click)="removeSidebarItem(rowNode.node.id)"></button>
+                <button pButton
+                        type="button"
+                        icon="pi pi-times"
+                        class="p-button-rounded p-button-text ml-auto"
+                        (click)="removeSidebarItem(rowNode.node.id)">
+                </button>
             </td>
         </tr>
     </ng-template>
@@ -26,7 +34,7 @@
                            [(ngModel)]="newRootItemInputValue"
                            (keydown.enter)="createNewRootItem()"
                            (keypress)="disableNewRootItemInputSelection()">
-                    <button type="button" pButton icon="pi pi-times" (click)="removeNewRootItem()"></button>
+                    <button type="button" pButton icon="pi pi-times" (click)="cancelNewRootItem()"></button>
                 </div>
             </td>
         </tr>
@@ -37,5 +45,11 @@
         </tr>
     </ng-template>
 </p-treeTable>
-
+<p-confirmDialog key="positionDialog" position="top-left" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+<p-dialog header="Warning" [(visible)]="errorDialogVisible" position="top-left" [modal]="true" [draggable]="false" [resizable]="false">
+    <p class="flex align-items-center"><i class="pi pi-exclamation-triangle" style="font-size: 2rem"></i> <span class="ml-3">{{errorMessage}}</span></p>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="errorDialogVisible=false" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
 <p-contextMenu #sidebarContextMenu [model]="sidebarContextMenuItems"></p-contextMenu>
