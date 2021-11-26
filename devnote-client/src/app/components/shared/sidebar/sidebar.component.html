@@ -13,12 +13,6 @@
             <td style="padding: 0;" class="flex align-items-center">
                 <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
                 {{rowData.name}}
-                <button pButton
-                        type="button"
-                        icon="pi pi-times"
-                        class="p-button-rounded p-button-text ml-auto"
-                        (click)="removeSidebarItem(rowNode.node.id)">
-                </button>
             </td>
         </tr>
     </ng-template>

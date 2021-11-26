@@ -28,8 +28,16 @@ export class SidebarComponent {
 
     constructor(private sidebarService: SidebarService, private confirmationService: ConfirmationService) {
         this.sidebarContextMenuItems = [
-            {label: 'Add Sub Item', icon: 'pi pi-plus', command: (event) => console.log(event)},
-            {label: 'Remove Item', icon: 'pi pi-trash', command: (event) => console.log(event)}
+            {
+                label: 'Add Sub Item', icon: 'pi pi-plus', command: (event) => {
+                    // todo: add new sub item
+                }
+            },
+            {
+                label: 'Remove Item', icon: 'pi pi-trash', command: (event) => {
+                    this.removeSidebarItem(this.selectedSidebarItem.id);
+                }
+            }
         ];
 
         sidebarService.getAll.subscribe(items => {
