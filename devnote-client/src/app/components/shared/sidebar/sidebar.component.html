@@ -7,13 +7,14 @@
              dataKey="name">
     <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
         <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode" [ttContextMenuRow]="rowNode">
-            <td style="padding: 0;">
+            <td style="padding: 0;" class="flex align-items-center">
                 <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
                 {{rowData.name}}
+                <button pButton type="button" icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger ml-auto" (click)="removeSidebarItem(rowNode.node.id)"></button>
             </td>
         </tr>
     </ng-template>
-    <ng-template pTemplate="footer" let-columns>
+    <ng-template pTemplate="footer">
         <tr *ngIf="newRootItemInputVisible">
             <td>
                 <div class="p-inputgroup">
@@ -31,8 +32,7 @@
         </tr>
         <tr>
             <td class="p-0">
-                <button pButton label="Add New" icon="pi pi-plus" class="p-button-text w-full text-left"
-                        (click)="addNewRoot()"></button>
+                <button pButton label="Add New" icon="pi pi-plus" class="p-button-text w-full text-left" (click)="addNewRoot()"></button>
             </td>
         </tr>
     </ng-template>

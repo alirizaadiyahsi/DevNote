@@ -9,7 +9,9 @@ export class SidebarService {
         devNoteDb.sidebarItems.add(item);
     }
 
-
+    remove(id: number) {
+        devNoteDb.sidebarItems.delete(id);
+    }
 }
 
 

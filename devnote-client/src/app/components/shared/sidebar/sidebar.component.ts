@@ -3,7 +3,7 @@ import {
     ElementRef,
     ViewChild
 } from '@angular/core';
-import {MenuItem, TreeNode} from "primeng/api";
+import {MenuItem} from "primeng/api";
 import {SidebarService} from "../../../../services/sidebar-service";
 import {SidebarItem} from "../../../../data-access/entities/sidebar-item";
 
@@ -16,7 +16,7 @@ export class SidebarComponent {
 
     @ViewChild('newRootItemInput') newRootItemInput: ElementRef | undefined;
 
-    sidebarItems: TreeNode[] = [];
+    sidebarItems: SidebarItem[] = [];
     selectedSidebarItem: any;
     sidebarContextMenuItems: MenuItem[];
     newRootItemInputVisible = false;
@@ -30,49 +30,8 @@ export class SidebarComponent {
         ];
 
         sidebarService.getAll.subscribe(items => {
-            this.sidebarItems = items as TreeNode[];
+            this.sidebarItems = items;
         });
-
-        // this.sidebarItems = [{
-        //     data: {
-        //         name: "Documents"
-        //     },
-        //     expanded: true,
-        //     children: [
-        //         {
-        //             data: {
-        //                 name: "Work"
-        //             },
-        //             expanded: true,
-        //             children: [
-        //                 {
-        //                     data: {
-        //                         name: "Expenses.doc"
-        //                     }
-        //                 },
-        //                 {
-        //                     data: {
-        //                         name: "Resume.doc"
-        //                     }
-        //                 }
-        //             ]
-        //         },
-        //         {
-        //             data: {
-        //                 name: "Home"
-        //             },
-        //             expanded: true,
-        //             children: [
-        //                 {
-        //                     data: {
-        //                         name: "Invoices"
-        //                     }
-        //                 }
-        //             ]
-        //         }
-        //     ]
-        // }
-        // ];
     }
 
     ngAfterViewChecked() {
@@ -109,5 +68,9 @@ export class SidebarComponent {
         this.newRootItemInputVisible = false;
         this.selectNewRootItemInput = true;
         this.newRootItemInputValue = "New Item";
+    }
+
+    removeSidebarItem(id: number) {
+        this.sidebarService.remove(id);
     }
 }
