@@ -25,12 +25,15 @@ export class SidebarComponent {
     newRootItemInputValue = "New Item";
     errorDialogVisible = false;
     errorMessage = "";
+    addSubSidebarItemDialogVisible = false;
+    addSubSidebarItemDialogHeader = "";
+    newSubItemInputValue = "";
 
     constructor(private sidebarService: SidebarService, private confirmationService: ConfirmationService) {
         this.sidebarContextMenuItems = [
             {
                 label: 'Add Sub Item', icon: 'pi pi-plus', command: (event) => {
-                    // todo: add new sub item
+                    this.addSubSidebarItemClick();
                 }
             },
             {
@@ -80,12 +83,45 @@ export class SidebarComponent {
             });
     }
 
+    editRootItem(rowData: any, id: number) {
+        if (rowData.name.trim() === "") {
+            this.setErrorDialog("Please enter a name for the new item.");
+            return;
+        }
+
+        let sidebarItem = {
+            data: {
+                name: rowData.name
+            }
+        } as SidebarItem;
+        this.sidebarService.update(id, sidebarItem)
+            .then(() => {
+                this.selectNewRootItemInput = false;
+            })
+            .catch(error => {
+                this.setErrorDialog(error.message);
+            });
+    }
+
+    cancelEditRootItem() {
+        this.sidebarItems.forEach(item => {
+            item.data.editEnabled = false;
+        });
+    }
+
+    editRootItemButtonClick(id: number) {
+        this.sidebarItems.forEach(item => {
+            if (item.id === id) {
+                item.data.editEnabled = true;
+            }
+        });
+    }
+
     disableNewRootItemInputSelection() {
         this.selectNewRootItemInput = false;
     }
 
     removeSidebarItem(id: number) {
-        // todo: this can be global
         this.confirmationService.confirm({
             message: 'Do you want to delete this record?',
             header: 'Delete Confirmation',
@@ -99,13 +135,38 @@ export class SidebarComponent {
         });
     }
 
+    addSubSidebarItemClick() {
+        this.addSubSidebarItemDialogHeader = `Add Sub Item to "${this.selectedSidebarItem.data.name}"`;
+        this.addSubSidebarItemDialogVisible = true;
+    }
+
+    addSubSidebarItem() {
+        if (this.newSubItemInputValue.trim() === "") {
+            this.setErrorDialog("Please enter a name for the new item.");
+            return;
+        }
+
+        this.addSubSidebarItemDialogVisible = false;
+        let subSidebarItem = {
+            data: {
+                name: this.newSubItemInputValue
+            }
+        } as SidebarItem;
+        this.sidebarService.addSubItem(this.selectedSidebarItem.id, subSidebarItem)
+            .then(() => {
+                this.selectNewRootItemInput = false;
+            })
+            .catch(error => {
+                this.setErrorDialog(error.message);
+            });
+    }
+
     private resetNewRootItemInput() {
         this.newRootItemInputVisible = false;
         this.selectNewRootItemInput = true;
         this.newRootItemInputValue = "New Item";
     }
 
-    // todo: this can be global
     private setErrorDialog(message: string) {
         this.errorMessage = message;
         this.errorDialogVisible = true;

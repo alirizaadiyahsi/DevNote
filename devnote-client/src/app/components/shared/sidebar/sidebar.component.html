@@ -6,13 +6,27 @@
              [contextMenu]="sidebarContextMenu"
              dataKey="name">
     <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
-        <tr [ttRow]="rowNode"
+        <tr *ngIf="!rowData.editEnabled"
+            [ttRow]="rowNode"
             [ttSelectableRow]="rowNode"
             [ttContextMenuRow]="rowNode"
-            class="sidebar-item">
-            <td style="padding: 0;" class="flex align-items-center">
+            class="sidebar-item"
+            (dblclick)="editRootItemButtonClick(rowNode.node.id)">
+            <td style="padding: 0;">
                 <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-                {{rowData.name}}
+                <span>{{rowData.name}}</span>
+            </td>
+        </tr>
+        <tr class="sidebar-item" *ngIf="rowData.editEnabled">
+            <td style="padding: 0;">
+                <div class="p-inputgroup">
+                    <input type="text"
+                           pInputText
+                           class="p-inputtext-sm w-full p-inputtext-sm"
+                           [(ngModel)]="rowData.name"
+                           (keydown.enter)="editRootItem(rowData, rowNode.node.id)">
+                    <button type="button" pButton icon="pi pi-times" (click)="cancelEditRootItem()"></button>
+                </div>
             </td>
         </tr>
     </ng-template>
@@ -24,7 +38,6 @@
                            #newRootItemInput
                            pInputText
                            class="p-inputtext-sm w-full"
-                           placeholder="New Item"
                            [(ngModel)]="newRootItemInputValue"
                            (keydown.enter)="createNewRootItem()"
                            (keypress)="disableNewRootItemInputSelection()">
@@ -47,3 +60,18 @@
     </ng-template>
 </p-dialog>
 <p-contextMenu #sidebarContextMenu [model]="sidebarContextMenuItems"></p-contextMenu>
+
+<p-dialog [header]="addSubSidebarItemDialogHeader" [(visible)]="addSubSidebarItemDialogVisible" position="top-left" [modal]="true" [resizable]="false">
+    <div>
+        <input type="text"
+               pInputText
+               class="p-inputtext-sm w-full"
+               placeholder="New Sub Item"
+               [(ngModel)]="newSubItemInputValue"
+               (keydown.enter)="addSubSidebarItem()">
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="addSubSidebarItemDialogVisible = false" label="Cancel" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="addSubSidebarItem()" label="Save" styleClass="p-button"></p-button>
+    </ng-template>
+</p-dialog>
