@@ -5,6 +5,9 @@ import {FormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
+// services
+import {SidebarService} from "../services/sidebar-service";
+
 // components
 import {SidebarComponent} from './components/shared/sidebar/sidebar.component';
 import {NavbarComponent} from './components/shared/navbar/navbar.component';
@@ -33,7 +36,7 @@ import {InputTextModule} from "primeng/inputtext";
         ButtonModule,
         InputTextModule
     ],
-    providers: [],
+    providers: [SidebarService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
