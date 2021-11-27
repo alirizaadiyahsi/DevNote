@@ -1,4 +1,4 @@
-import {ErrorHandler, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
@@ -6,7 +6,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
 // services
-import {SidebarService} from "../services/sidebar-service";
+import {SidebarService} from "../common/services/sidebar-service";
 import {ConfirmationService} from 'primeng/api';
 
 // components
@@ -21,6 +21,7 @@ import {ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {DialogModule} from 'primeng/dialog';
+import {OrderListModule} from "primeng/orderlist";
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import {DialogModule} from 'primeng/dialog';
         ButtonModule,
         InputTextModule,
         ConfirmDialogModule,
-        DialogModule
+        DialogModule,
+        OrderListModule
     ],
     providers: [SidebarService, ConfirmationService],
     bootstrap: [AppComponent]

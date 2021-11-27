@@ -1,12 +1,8 @@
-import {
-    Component,
-    ElementRef,
-    ViewChild
-} from '@angular/core';
-import {MenuItem} from "primeng/api";
-import {SidebarService} from "../../../../services/sidebar-service";
-import {SidebarItem} from "../../../../data-access/entities/sidebar-item";
+import {Component} from '@angular/core';
+import {SidebarService} from "../../../../common/services/sidebar-service";
 import {ConfirmationService} from 'primeng/api';
+import {SidebarItem} from "../../../../common/data-access/entities/sidebar-item";
+import {ContextMenu} from "primeng/contextmenu";
 
 @Component({
     selector: 'app-sidebar',
@@ -15,156 +11,77 @@ import {ConfirmationService} from 'primeng/api';
 })
 export class SidebarComponent {
 
-    @ViewChild('newRootItemInput') newRootItemInput: ElementRef | undefined;
-
     sidebarItems: SidebarItem[] = [];
-    selectedSidebarItem: any;
-    sidebarContextMenuItems: MenuItem[];
-    newRootItemInputVisible = false;
-    selectNewRootItemInput = true;
-    newRootItemInputValue = "New Item";
+    addItemInputVisible = false;
+    addItemInputValue: any;
+    sidebarContextMenuItems: any;
+    selectedSidebarItem: SidebarItem = {} as SidebarItem;
+    modalSidebarItemEditVisible = false;
     errorDialogVisible = false;
     errorMessage = "";
-    addSubSidebarItemDialogVisible = false;
-    addSubSidebarItemDialogHeader = "";
-    newSubItemInputValue = "";
 
     constructor(private sidebarService: SidebarService, private confirmationService: ConfirmationService) {
-        this.sidebarContextMenuItems = [
-            {
-                label: 'Add Sub Item', icon: 'pi pi-plus', command: (event) => {
-                    this.addSubSidebarItemClick();
-                }
-            },
-            {
-                label: 'Remove Item', icon: 'pi pi-trash', command: (event) => {
-                    this.removeSidebarItem(this.selectedSidebarItem.id);
-                }
-            }
-        ];
-
         sidebarService.getAll.subscribe(items => {
             this.sidebarItems = items;
         });
+
+        this.sidebarContextMenuItems = [
+            {label: 'Edit', icon: 'pi pi-fw pi-pencil', command: () => this.updateSidebarItemClick()},
+            {label: 'Delete', icon: 'pi pi-fw pi-trash', command: () => this.removeSidebarItem()}
+        ];
     }
 
-    ngAfterViewChecked() {
-        if (this.selectNewRootItemInput) {
-            this.newRootItemInput?.nativeElement.focus();
-            this.newRootItemInput?.nativeElement.select();
-        }
-    }
-
-    addNewRoot() {
-        this.newRootItemInputVisible = true;
-    }
-
-    cancelNewRootItem() {
-        this.resetNewRootItemInput();
-    }
-
-    createNewRootItem() {
-        if (this.newRootItemInputValue.trim() === "") {
+    addItem(itemName: string) {
+        if (!itemName || itemName.trim() === "") {
             this.setErrorDialog("Please enter a name for the new item.");
             return;
         }
 
-        let sidebarItem = {
-            data: {
-                name: this.newRootItemInputValue
-            }
-        } as SidebarItem;
-        this.sidebarService.add(sidebarItem)
+        this.sidebarService.add(new SidebarItem(itemName))
             .then(() => {
-                this.resetNewRootItemInput();
+                this.addItemInputVisible = false;
+            })
+            .catch(error => {
+                this.setErrorDialog(error.message);
+            });
+    };
+
+    updateSidebarItem() {
+        if (!this.selectedSidebarItem || !this.selectedSidebarItem.name || this.selectedSidebarItem.name.trim() === "") {
+            this.setErrorDialog("Please enter a name for the new item.");
+            return;
+        }
+
+        this.sidebarService.update(this.selectedSidebarItem)
+            .then(() => {
+                this.modalSidebarItemEditVisible = false;
             })
             .catch(error => {
                 this.setErrorDialog(error.message);
             });
     }
 
-    editRootItem(rowData: any, id: number) {
-        if (rowData.name.trim() === "") {
-            this.setErrorDialog("Please enter a name for the new item.");
-            return;
-        }
-
-        let sidebarItem = {
-            data: {
-                name: rowData.name
-            }
-        } as SidebarItem;
-        this.sidebarService.update(id, sidebarItem)
-            .then(() => {
-                this.selectNewRootItemInput = false;
-            })
-            .catch(error => {
-                this.setErrorDialog(error.message);
-            });
-    }
-
-    cancelEditRootItem() {
-        this.sidebarItems.forEach(item => {
-            item.data.editEnabled = false;
-        });
-    }
-
-    editRootItemButtonClick(id: number) {
-        this.sidebarItems.forEach(item => {
-            if (item.id === id) {
-                item.data.editEnabled = true;
-            }
-        });
-    }
-
-    disableNewRootItemInputSelection() {
-        this.selectNewRootItemInput = false;
-    }
-
-    removeSidebarItem(id: number) {
+    removeSidebarItem() {
         this.confirmationService.confirm({
             message: 'Do you want to delete this record?',
             header: 'Delete Confirmation',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.sidebarService.remove(id);
+                this.sidebarService.remove(this.selectedSidebarItem.id);
             },
             reject: (type: any) => {
             },
-            key: "positionDialog"
+            key: "confirmDialogSidebarDelete"
         });
     }
 
-    addSubSidebarItemClick() {
-        this.addSubSidebarItemDialogHeader = `Add Sub Item to "${this.selectedSidebarItem.data.name}"`;
-        this.addSubSidebarItemDialogVisible = true;
+    openSidebarItemContextMenu($event: MouseEvent, sidebarItemContextMenu: ContextMenu, sidebarItem: any) {
+        this.selectedSidebarItem = {...sidebarItem};
+        sidebarItemContextMenu.show($event);
     }
 
-    addSubSidebarItem() {
-        if (this.newSubItemInputValue.trim() === "") {
-            this.setErrorDialog("Please enter a name for the new item.");
-            return;
-        }
-
-        this.addSubSidebarItemDialogVisible = false;
-        let subSidebarItem = {
-            data: {
-                name: this.newSubItemInputValue
-            }
-        } as SidebarItem;
-        this.sidebarService.addSubItem(this.selectedSidebarItem.id, subSidebarItem)
-            .then(() => {
-                this.selectNewRootItemInput = false;
-            })
-            .catch(error => {
-                this.setErrorDialog(error.message);
-            });
-    }
-
-    private resetNewRootItemInput() {
-        this.newRootItemInputVisible = false;
-        this.selectNewRootItemInput = true;
-        this.newRootItemInputValue = "New Item";
+    private updateSidebarItemClick() {
+        this.modalSidebarItemEditVisible = true;
     }
 
     private setErrorDialog(message: string) {
