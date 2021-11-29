@@ -3,6 +3,8 @@ import {SidebarService} from "../../../../common/services/sidebar-service";
 import {ConfirmationService} from 'primeng/api';
 import {SidebarItem} from "../../../../common/data-access/entities/sidebar-item";
 import {ContextMenu} from "primeng/contextmenu";
+import {TabService} from "../../../../common/services/tab-service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-sidebar',
@@ -16,30 +18,49 @@ export class SidebarComponent {
     addItemInputValue: any;
     sidebarContextMenuItems: any;
     selectedSidebarItem: SidebarItem = {} as SidebarItem;
+    selectedSidebarItems: SidebarItem [] = [];
     modalSidebarItemEditVisible = false;
     errorDialogVisible = false;
     errorMessage = "";
 
-    constructor(private sidebarService: SidebarService, private confirmationService: ConfirmationService) {
-        sidebarService.getAll.subscribe(items => {
-            this.sidebarItems = items;
-        });
-
+    constructor(
+        private sidebarService: SidebarService,
+        private tabService: TabService,
+        private confirmationService: ConfirmationService,
+        private router: Router
+    ) {
         this.sidebarContextMenuItems = [
             {label: 'Edit', icon: 'pi pi-fw pi-pencil', command: () => this.updateSidebarItemClick()},
             {label: 'Delete', icon: 'pi pi-fw pi-trash', command: () => this.removeSidebarItem()}
         ];
+
+        sidebarService.getAll.subscribe(items => {
+            this.sidebarItems = items;
+            if (!this.selectedSidebarItem.id) {
+                if (this.sidebarItems.length > 0) {
+                    this.selectedSidebarItem = this.sidebarItems[0];
+
+                    this.selectedSidebarItems = [this.selectedSidebarItem];
+                    this.router.navigate(['/tabs', this.selectedSidebarItem.id]);
+                }
+            } else {
+                this.selectedSidebarItems = [this.sidebarItems.filter(item => item.id === this.selectedSidebarItem.id)[0]];
+                this.router.navigate(['/tabs', this.selectedSidebarItem.id]);
+            }
+        });
     }
 
     addItem(itemName: string) {
         if (!itemName || itemName.trim() === "") {
-            this.setErrorDialog("Please enter a name for the new item.");
+            this.setErrorDialog("Please enter a name for the item.");
             return;
         }
 
         this.sidebarService.add(new SidebarItem(itemName))
-            .then(() => {
+            .then((id) => {
                 this.addItemInputVisible = false;
+                this.addItemInputValue = "";
+                this.selectedSidebarItem = {id: id, name: itemName};
             })
             .catch(error => {
                 this.setErrorDialog(error.message);
@@ -48,7 +69,7 @@ export class SidebarComponent {
 
     updateSidebarItem() {
         if (!this.selectedSidebarItem || !this.selectedSidebarItem.name || this.selectedSidebarItem.name.trim() === "") {
-            this.setErrorDialog("Please enter a name for the new item.");
+            this.setErrorDialog("Please enter a name for the item.");
             return;
         }
 
@@ -68,6 +89,7 @@ export class SidebarComponent {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.sidebarService.remove(this.selectedSidebarItem.id);
+                this.selectedSidebarItem = {} as SidebarItem;
             },
             reject: (type: any) => {
             },
@@ -78,6 +100,11 @@ export class SidebarComponent {
     openSidebarItemContextMenu($event: MouseEvent, sidebarItemContextMenu: ContextMenu, sidebarItem: any) {
         this.selectedSidebarItem = {...sidebarItem};
         sidebarItemContextMenu.show($event);
+    }
+
+    gotoTabsPage(event: any) {
+        let sidebarItem = event.value[0];
+        this.router.navigate(['/tabs', sidebarItem.id]);
     }
 
     private updateSidebarItemClick() {

@@ -1,4 +1,4 @@
-<p-orderList [value]="sidebarItems">
+<p-orderList [value]="sidebarItems" [(selection)]="selectedSidebarItems" (onSelectionChange)="gotoTabsPage($event)">
     <ng-template pTemplate="header">
         <div>
             <button pButton
@@ -30,7 +30,7 @@
 
 <p-contextMenu #sidebarItemContextMenu appendTo="body" [model]="sidebarContextMenuItems"></p-contextMenu>
 
-<p-confirmDialog key="confirmDialogSidebarDelete" rejectButtonStyleClass="p-button-outlined" acceptButtonStyleClass="p-button-danger"></p-confirmDialog>
+<p-confirmDialog key="confirmDialogSidebarDelete" rejectButtonStyleClass="p-button-outlined p-button-plain" acceptButtonStyleClass="p-button-danger"></p-confirmDialog>
 
 <p-dialog header="Edit Sidebar Item" [(visible)]="modalSidebarItemEditVisible" [modal]="true" [draggable]="false" [resizable]="false">
     <div>

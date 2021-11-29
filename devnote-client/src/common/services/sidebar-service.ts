@@ -8,15 +8,11 @@ export class SidebarService {
     add(sidebarItem: SidebarItem) {
         return devNoteDb.sidebarItems.filter(item => item.name === sidebarItem.name).count().then(count => {
             if (count === 0) {
-                devNoteDb.sidebarItems.add(sidebarItem);
+                return devNoteDb.sidebarItems.add(sidebarItem);
             } else {
                 throw new Error("Sidebar item already exists!");
             }
         });
-    }
-
-    remove(id: number) {
-        devNoteDb.sidebarItems.delete(id);
     }
 
     update(sidebarItem: SidebarItem) {
@@ -27,6 +23,10 @@ export class SidebarService {
                 throw new Error("Sidebar item already exists!");
             }
         });
+    }
+
+    remove(id: number) {
+        devNoteDb.sidebarItems.delete(id);
     }
 }
 
