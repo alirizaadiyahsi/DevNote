@@ -6,8 +6,10 @@
             </div>
         </ng-template>
         <div *ngIf="tabItem.id>0; else elseBlock">
-            <p-editor [(ngModel)]="tabItem.content" [style]="{'height':'200px'}"></p-editor>
-            <button pButton label="Save" icon="pi pi-save" class="mt-2" (click)="updateTabItemContent(tabItem)"></button>
+            <p-editor [(ngModel)]="tabItem.content" [style]="{'height':'600px'}"></p-editor>
+            <div class="mt-2 text-right">
+                <button pButton label="Save" icon="pi pi-save" (click)="updateTabItemContent(tabItem)"></button>
+            </div>
         </div>
         <ng-template #elseBlock>
             <ng-template pTemplate="header" class="tab-item-header">
