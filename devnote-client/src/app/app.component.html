@@ -1,7 +1,7 @@
-<div *ngIf="token">
+<div>
     <app-navbar></app-navbar>
 </div>
-<div *ngIf="token" class="grid container">
+<div class="grid container">
     <div class="col-2 border-right-1 border-black-alpha-10 sidebar">
         <app-sidebar></app-sidebar>
     </div>
@@ -9,7 +9,5 @@
         <router-outlet></router-outlet>
     </div>
 </div>
-<h1 *ngIf="!token"> User is not logged in</h1>
-
 
 

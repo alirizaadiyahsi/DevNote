@@ -44,6 +44,12 @@ export class TabsComponent implements OnInit {
                     id: 0,
                     name: ''
                 });
+
+                if (!this.selectedTabItem.id) {
+                    if (this.tabItems.length > 0) {
+                        this.selectedTabItem = this.tabItems[0];
+                    }
+                }
             });
         });
     }
@@ -57,21 +63,32 @@ export class TabsComponent implements OnInit {
         this.tabService.add(new TabItem(this.sidebarItemId, itemName))
             .then((id) => {
                 this.addTabInputValue = "";
+                this.selectedTabItem = {id: id, name: itemName, content: "", sidebarItemId: this.sidebarItemId};
             })
             .catch(error => {
                 this.setErrorDialog(error.message);
             });
     }
 
-    updateTabItem() {
+    updateTabItemHeader() {
         if (!this.selectedTabItem || !this.selectedTabItem.name || this.selectedTabItem.name.trim() === "") {
             this.setErrorDialog("Please enter a name for the tab.");
             return;
         }
 
-        this.tabService.update(this.selectedTabItem)
+        this.tabService.updateHeader(this.selectedTabItem)
             .then(() => {
                 this.modalTabItemEditVisible = false;
+            })
+            .catch(error => {
+                this.setErrorDialog(error.message);
+            });
+    }
+
+    updateTabItemContent(tabItem: TabItem) {
+        this.tabService.updateContent(tabItem)
+            .then(() => {
+                this.selectedTabItem = tabItem;
             })
             .catch(error => {
                 this.setErrorDialog(error.message);
@@ -96,6 +113,10 @@ export class TabsComponent implements OnInit {
     openTabItemContextMenu($event: MouseEvent, tabItemContextMenu: ContextMenu, tabItem: TabItem) {
         this.selectedTabItem = {...tabItem};
         tabItemContextMenu.toggle($event);
+    }
+
+    onTabChange(tabItem: TabItem) {
+        this.selectedTabItem = {...tabItem};
     }
 
     private setErrorDialog(message: string) {

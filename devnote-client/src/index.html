@@ -9,23 +9,5 @@
 </head>
 <body>
 <app-root></app-root>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<script>
-    window.onload = function () {
-        this.token = localStorage.getItem("accessToken");
-        if (!token){
-            google.accounts.id.initialize({
-                client_id: '128625115668-phfbqbepjvcud0p3embhvhi7pscdsfs9.apps.googleusercontent.com',
-                callback: handleCredentialResponse
-            });
-            google.accounts.id.prompt();
-        }
-    }
-
-    var handleCredentialResponse = function (response) {
-        localStorage.setItem("accessToken", response.credential);
-        location.reload();
-    }
-</script>
 </body>
 </html>

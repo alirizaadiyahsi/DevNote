@@ -16,7 +16,7 @@ export class TabService {
         });
     }
 
-    update(tabItem: TabItem) {
+    updateHeader(tabItem: TabItem) {
         return devNoteDb.tabItems.filter(item => item.name === tabItem.name && item.sidebarItemId == tabItem.sidebarItemId).count().then(count => {
             if (count === 0) {
                 devNoteDb.tabItems.update(tabItem.id, tabItem);
@@ -24,6 +24,10 @@ export class TabService {
                 throw new Error("Tab item already exists!");
             }
         });
+    }
+
+    updateContent(tabItem: TabItem) {
+        return devNoteDb.tabItems.update(tabItem.id, tabItem);
     }
 
     remove(id: number) {

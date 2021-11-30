@@ -26,6 +26,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {DialogModule} from 'primeng/dialog';
 import {OrderListModule} from "primeng/orderlist";
 import {TabViewModule} from "primeng/tabview";
+import {EditorModule} from "primeng/editor";
 
 @NgModule({
     declarations: [
@@ -47,7 +48,8 @@ import {TabViewModule} from "primeng/tabview";
         ConfirmDialogModule,
         DialogModule,
         OrderListModule,
-        TabViewModule
+        TabViewModule,
+        EditorModule
     ],
     providers: [SidebarService, TabService, ConfirmationService],
     bootstrap: [AppComponent]

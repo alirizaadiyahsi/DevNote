@@ -1,12 +1,13 @@
 <p-tabView>
-    <p-tabPanel [header]="item.name" *ngFor="let item of tabItems; let i = index" [selected]="i == 0">
+    <p-tabPanel [header]="tabItem.name" *ngFor="let tabItem of tabItems; let i = index" [selected]="tabItem.id == selectedTabItem.id">
         <ng-template pTemplate="header">
-            <div class="tab-item-header" (contextmenu)="openTabItemContextMenu($event, tabItemContextMenu, item)">
-                {{item.name}}
+            <div class="tab-item-header" (contextmenu)="openTabItemContextMenu($event, tabItemContextMenu, tabItem)">
+                {{tabItem.name}}
             </div>
         </ng-template>
-        <div *ngIf="item.id>0; else elseBlock">
-            {{item.name}}
+        <div *ngIf="tabItem.id>0; else elseBlock">
+            <p-editor [(ngModel)]="tabItem.content" [style]="{'height':'200px'}"></p-editor>
+            <button pButton label="Save" icon="pi pi-save" class="mt-2" (click)="updateTabItemContent(tabItem)"></button>
         </div>
         <ng-template #elseBlock>
             <ng-template pTemplate="header" class="tab-item-header">
@@ -35,12 +36,12 @@
                pInputText
                placeholder="New Item"
                class="p-inputtext-sm w-full"
-               (keydown.enter)="updateTabItem()"
+               (keydown.enter)="updateTabItemHeader()"
                [(ngModel)]="selectedTabItem.name">
     </div>
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-times" (click)="modalTabItemEditVisible=false" label="Cancel" styleClass="p-button-text"></p-button>
-        <p-button icon="pi pi-check" (click)="updateTabItem()" label="Save"></p-button>
+        <p-button icon="pi pi-check" (click)="updateTabItemHeader()" label="Save"></p-button>
     </ng-template>
 </p-dialog>
 
