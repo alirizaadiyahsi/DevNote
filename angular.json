@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "devnote-client": {
+        "devnote": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -78,10 +78,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "devnote-client:build:production"
+                            "browserTarget": "devnote:build:production"
                         },
                         "development": {
-                            "browserTarget": "devnote-client:build:development"
+                            "browserTarget": "devnote:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -89,7 +89,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "devnote-client:build"
+                        "browserTarget": "devnote:build"
                     }
                 },
                 "test": {
@@ -113,5 +113,5 @@
             }
         }
     },
-    "defaultProject": "devnote-client"
+    "defaultProject": "devnote"
 }
