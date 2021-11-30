@@ -99,7 +99,7 @@ export class SidebarComponent {
 
     openSidebarItemContextMenu($event: MouseEvent, sidebarItemContextMenu: ContextMenu, sidebarItem: any) {
         this.selectedSidebarItem = {...sidebarItem};
-        sidebarItemContextMenu.show($event);
+        sidebarItemContextMenu.toggle($event);
     }
 
     gotoTabsPage(event: any) {

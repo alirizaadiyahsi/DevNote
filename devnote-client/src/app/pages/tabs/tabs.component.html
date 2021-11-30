@@ -1,11 +1,18 @@
 <p-tabView>
     <p-tabPanel [header]="item.name" *ngFor="let item of tabItems; let i = index" [selected]="i == 0">
+        <ng-template pTemplate="header">
+            <div class="tab-item-header" (contextmenu)="openTabItemContextMenu($event, tabItemContextMenu, item)">
+                {{item.name}}
+            </div>
+        </ng-template>
         <div *ngIf="item.id>0; else elseBlock">
             {{item.name}}
         </div>
         <ng-template #elseBlock>
-            <ng-template pTemplate="header">
-                <i class="pi pi-plus"></i>
+            <ng-template pTemplate="header" class="tab-item-header">
+                <div class="tab-item-header">
+                    <i class="pi pi-plus"></i>
+                </div>
             </ng-template>
             <div class="p-inputgroup w-2">
                 <input type="text"
@@ -19,6 +26,23 @@
         </ng-template>
     </p-tabPanel>
 </p-tabView>
+
+<p-contextMenu #tabItemContextMenu appendTo="body" [model]="tabContextMenuItems"></p-contextMenu>
+
+<p-dialog header="Edit Tab Item" [(visible)]="modalTabItemEditVisible" [modal]="true" [draggable]="false" [resizable]="false">
+    <div>
+        <input type="text"
+               pInputText
+               placeholder="New Item"
+               class="p-inputtext-sm w-full"
+               (keydown.enter)="updateTabItem()"
+               [(ngModel)]="selectedTabItem.name">
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="modalTabItemEditVisible=false" label="Cancel" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="updateTabItem()" label="Save"></p-button>
+    </ng-template>
+</p-dialog>
 
 <p-dialog header="Warning" [(visible)]="errorDialogVisible" [modal]="true" [draggable]="false" [resizable]="false">
     <p class="flex align-items-center"><i class="pi pi-exclamation-triangle" style="font-size: 2rem"></i> <span class="ml-3">{{errorMessage}}</span></p>
