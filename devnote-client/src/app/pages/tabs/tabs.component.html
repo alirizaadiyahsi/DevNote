@@ -6,10 +6,33 @@
             </div>
         </ng-template>
         <div *ngIf="tabItem.id>0; else elseBlock">
-            <p-editor [(ngModel)]="tabItem.content" [style]="{'height':'600px'}"></p-editor>
-            <div class="mt-2 text-right">
-                <button pButton label="Save" icon="pi pi-save" (click)="updateTabItemContent(tabItem)"></button>
-            </div>
+            <p-tabView>
+                <p-tabPanel>
+                    <ng-template pTemplate="header">
+                        <div class="tab-item-header">
+                            Preview
+                        </div>
+                    </ng-template>
+                    <div class="ql-container ql-snow" style="border-width: 0;">
+                        <div class="ql-editor" [innerHTML]="tabItem.content">
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <p-tabPanel>
+                    <ng-template pTemplate="header">
+                        <div class="tab-item-header">
+                            Write
+                        </div>
+                    </ng-template>
+                    <p-editor [(ngModel)]="tabItem.content" [style]="{'height':'600px'}">
+                    </p-editor>
+                    <div class="mt-2 text-right">
+                        <button pButton label="Save" icon="pi pi-save" (click)="updateTabItemContent(tabItem)"></button>
+                    </div>
+                </p-tabPanel>
+            </p-tabView>
+
+
         </div>
         <ng-template #elseBlock>
             <ng-template pTemplate="header" class="tab-item-header">
