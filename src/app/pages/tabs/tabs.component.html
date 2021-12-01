@@ -6,11 +6,11 @@
             </div>
         </ng-template>
         <div *ngIf="tabItem.id>0; else elseBlock">
-            <p-tabView>
+            <p-tabView id="tabEditContent">
                 <p-tabPanel>
                     <ng-template pTemplate="header">
-                        <div class="tab-item-header">
-                            Preview
+                        <div class="tab-item-header tab-item-header-inner">
+                            <i class="pi pi-eye"></i>
                         </div>
                     </ng-template>
                     <div class="ql-container ql-snow" style="border-width: 0;">
@@ -20,8 +20,8 @@
                 </p-tabPanel>
                 <p-tabPanel>
                     <ng-template pTemplate="header">
-                        <div class="tab-item-header">
-                            Write
+                        <div class="tab-item-header tab-item-header-inner">
+                            <i class="pi pi-pencil"></i>
                         </div>
                     </ng-template>
                     <p-editor [(ngModel)]="tabItem.content" [style]="{'height':'600px'}">
