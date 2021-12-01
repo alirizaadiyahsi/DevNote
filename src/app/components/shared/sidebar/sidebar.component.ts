@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {SidebarService} from "../../../../common/services/sidebar-service";
 import {ConfirmationService} from 'primeng/api';
 import {SidebarItem} from "../../../../common/data-access/entities/sidebar-item";
@@ -12,6 +12,8 @@ import {Router} from "@angular/router";
     styleUrls: ['./sidebar.component.less']
 })
 export class SidebarComponent {
+
+    @ViewChild("addItemInput") private addItemInput: ElementRef | undefined;
 
     sidebarItems: SidebarItem[] = [];
     addItemInputVisible = false;

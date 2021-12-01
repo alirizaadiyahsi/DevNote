@@ -10,12 +10,14 @@
         </div>
         <div *ngIf="addItemInputVisible" class="p-inputgroup">
             <div class="p-inputgroup">
-                <input type="text"
+                <input #addSidebarItemInput
+                       type="text"
                        pInputText
                        placeholder="New Item"
                        class="p-inputtext-sm w-full"
                        (keydown.enter)="addItem(addItemInputValue)"
                        [(ngModel)]="addItemInputValue">
+                {{addSidebarItemInput.focus()}}
                 <button type="button" pButton icon="pi pi-save" (click)="addItem(addItemInputValue)"></button>
                 <button type="button" pButton icon="pi pi-times" (click)="addItemInputVisible = false;addItemInputValue=null;"></button>
             </div>
