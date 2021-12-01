@@ -90,7 +90,7 @@ export class SidebarComponent {
             header: 'Delete Confirmation',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.sidebarService.remove(this.selectedSidebarItem.id);
+                this.sidebarService.remove(this.selectedSidebarItem.id, true);
                 this.selectedSidebarItem = {} as SidebarItem;
             },
             reject: (type: any) => {

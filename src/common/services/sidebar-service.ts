@@ -25,8 +25,12 @@ export class SidebarService {
         });
     }
 
-    remove(id: number) {
+    remove(id: number, deleteCascade: boolean) {
         devNoteDb.sidebarItems.delete(id);
+
+        if (deleteCascade) {
+            devNoteDb.tabItems.where("sidebarItemId").equals(id).delete();
+        }
     }
 }
 
