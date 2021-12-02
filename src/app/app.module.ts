@@ -8,6 +8,7 @@ import {AppComponent} from './app.component';
 // services
 import {SidebarService} from "../common/services/sidebar-service";
 import {TabService} from "../common/services/tab-service";
+import {SettingService} from "../common/services/setting-service";
 import {ConfirmationService} from 'primeng/api';
 
 // components
@@ -51,7 +52,7 @@ import {EditorModule} from "primeng/editor";
         TabViewModule,
         EditorModule
     ],
-    providers: [SidebarService, TabService, ConfirmationService],
+    providers: [SidebarService, TabService, SettingService, ConfirmationService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

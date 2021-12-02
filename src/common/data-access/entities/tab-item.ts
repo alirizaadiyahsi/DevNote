@@ -9,3 +9,4 @@
     content!: string;
     sidebarItemId!: number;
 }
+

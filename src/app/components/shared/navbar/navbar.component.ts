@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {DOCUMENT} from "@angular/common";
+import {SettingService} from "../../../../common/services/setting-service";
+import {Setting, SettingKeys} from "../../../../common/data-access/entities/setting";
 
 @Component({
     selector: 'app-navbar',
@@ -11,7 +13,10 @@ export class NavbarComponent implements OnInit {
 
     topBarItems: MenuItem[];
 
-    constructor(@Inject(DOCUMENT) private document: Document) {
+    constructor(
+        @Inject(DOCUMENT) private document: Document,
+        private settingService: SettingService
+    ) {
         this.topBarItems = [
             {
                 label: 'Edit',
@@ -37,12 +42,16 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.settingService.getByKey(SettingKeys.APP_THEME).then(setting => {
+            // @ts-ignore
+            this.changeTheme(setting.value);
+        });
     }
 
     private changeTheme(theme: string) {
         let themeLink = this.document.getElementById('app-theme') as HTMLLinkElement;
-
         if (themeLink) {
+            this.settingService.addOrUpdate({key: SettingKeys.APP_THEME, value: theme} as Setting);
             themeLink.href = theme + '.css';
         }
     }

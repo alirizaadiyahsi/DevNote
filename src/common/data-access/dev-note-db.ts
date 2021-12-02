@@ -1,17 +1,20 @@
 ﻿import Dexie, {Table} from 'dexie';
 import {SidebarItem} from "./entities/sidebar-item";
 import {TabItem} from "./entities/tab-item";
+import {Setting} from "./entities/setting";
 
 export class DevNoteDb extends Dexie {
 
     sidebarItems!: Table<SidebarItem, number>;
     tabItems!: Table<TabItem, number>;
+    settings!: Table<Setting, number>;
 
     constructor() {
         super('devNoteDb');
-        this.version(2).stores({
+        this.version(3).stores({
             sidebarItems: '++id, name, children',
-            tabItems: '++id, name, content, sidebarItemId'
+            tabItems: '++id, name, content, sidebarItemId',
+            settings: '++id, key, value'
         });
     }
 }
