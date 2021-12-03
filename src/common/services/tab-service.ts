@@ -7,13 +7,16 @@ export class TabService {
     getAll = liveQuery(() => devNoteDb.tabItems.where('sidebarItemId').equals(this.sidebarItemId).toArray());
 
     add(tabItem: TabItem) {
-        return devNoteDb.tabItems.filter(item => item.name === tabItem.name && item.sidebarItemId == tabItem.sidebarItemId).count().then(count => {
-            if (count === 0) {
+        return devNoteDb.tabItems.filter(item => item.name.includes(tabItem.name) && item.sidebarItemId == tabItem.sidebarItemId)
+            .reverse()
+            .sortBy('id')
+            .then(items => {
+                if (items.length > 0) {
+                    tabItem.name = tabItem.name + ' ' + (+(items[0].name.split(' ')[2]) + 1);
+                }
+
                 return devNoteDb.tabItems.add(tabItem);
-            } else {
-                throw new Error("Tab item already exists!");
-            }
-        });
+            });
     }
 
     updateHeader(tabItem: TabItem) {

@@ -54,12 +54,8 @@ export class TabsComponent implements OnInit {
         });
     }
 
-    addNewTab(itemName: string) {
-        if (!itemName || itemName.trim() === "") {
-            this.setErrorDialog("Please enter a name for the tab.");
-            return;
-        }
-
+    addNewTab() {
+        let itemName = "New Tab";
         this.tabService.add(new TabItem(this.sidebarItemId, itemName))
             .then((id) => {
                 this.addTabInputValue = "";
@@ -113,10 +109,6 @@ export class TabsComponent implements OnInit {
     openTabItemContextMenu($event: MouseEvent, tabItemContextMenu: ContextMenu, tabItem: TabItem) {
         this.selectedTabItem = {...tabItem};
         tabItemContextMenu.toggle($event);
-    }
-
-    onTabChange(tabItem: TabItem) {
-        this.selectedTabItem = {...tabItem};
     }
 
     private setErrorDialog(message: string) {

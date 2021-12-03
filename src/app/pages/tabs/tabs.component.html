@@ -36,21 +36,10 @@
         </div>
         <ng-template #elseBlock>
             <ng-template pTemplate="header" class="tab-item-header">
-                <div class="tab-item-header">
+                <div class="tab-item-header" (click)="addNewTab()">
                     <i class="pi pi-plus"></i>
                 </div>
             </ng-template>
-            <div class="p-inputgroup w-2">
-                <input #addTabItemInput
-                       type="text"
-                       pInputText
-                       placeholder="Tab Name"
-                       class="p-inputtext-sm"
-                       [(ngModel)]="addTabInputValue"
-                       (keydown.enter)="addNewTab(addTabInputValue)">
-                {{addTabItemInput.focus()}}
-                <button pButton icon="pi pi-save" (click)="addNewTab(addTabInputValue)"></button>
-            </div>
         </ng-template>
     </p-tabPanel>
 </p-tabView>

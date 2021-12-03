@@ -5,6 +5,7 @@ import {SidebarItem} from "../../../../common/data-access/entities/sidebar-item"
 import {ContextMenu} from "primeng/contextmenu";
 import {TabService} from "../../../../common/services/tab-service";
 import {Router} from "@angular/router";
+import {TabItem} from "../../../../common/data-access/entities/tab-item";
 
 @Component({
     selector: 'app-sidebar',
@@ -63,6 +64,12 @@ export class SidebarComponent {
                 this.addItemInputVisible = false;
                 this.addItemInputValue = "";
                 this.selectedSidebarItem = {id: id, name: itemName};
+
+                this.tabService.add({
+                    name: "New Tab",
+                    content: "",
+                    sidebarItemId: id
+                } as TabItem)
             })
             .catch(error => {
                 this.setErrorDialog(error.message);
