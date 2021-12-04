@@ -28,13 +28,15 @@ import {DialogModule} from 'primeng/dialog';
 import {OrderListModule} from "primeng/orderlist";
 import {TabViewModule} from "primeng/tabview";
 import {EditorModule} from "primeng/editor";
+import { ErrorDialogComponent } from './components/shared/common-dialogs/error-dialog/error-dialog.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         SidebarComponent,
         NavbarComponent,
-        TabsComponent
+        TabsComponent,
+        ErrorDialogComponent
     ],
     imports: [
         BrowserModule,

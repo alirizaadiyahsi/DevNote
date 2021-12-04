@@ -1,0 +1,6 @@
+<p-dialog header="Warning" [(visible)]="errorDialogVisible" [modal]="true" [draggable]="false" [resizable]="false">
+    <p class="flex align-items-center"><i class="pi pi-exclamation-triangle" style="font-size: 2rem"></i> <span class="ml-3">{{errorMessage}}</span></p>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="errorDialogVisible=false" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
