@@ -19,22 +19,24 @@ export class NavbarComponent implements OnInit {
     ) {
         this.topBarItems = [
             {
-                label: 'Edit',
-                icon: 'pi pi-fw pi-pencil',
+                label: 'Settings',
+                icon: 'pi pi-fw pi-cog',
                 items: [
                     {
-                        label: 'Light Theme',
-                        icon: 'pi pi-fw pi-circle',
-                        command: () => {
-                            this.changeTheme('mdc-light-indigo');
-                        }
-                    },
-                    {
-                        label: 'Dark Theme',
-                        icon: 'pi pi-fw pi-circle-fill',
-                        command: () => {
-                            this.changeTheme('mdc-dark-indigo');
-                        }
+                        label: 'Themes',
+                        icon: 'pi pi-fw pi-palette',
+                        items: [
+                            {
+                                label: 'Light',
+                                icon: 'pi pi-fw pi-circle',
+                                command: () => this.changeTheme('mdc-light-indigo')
+                            },
+                            {
+                                label: 'Dark',
+                                icon: 'pi pi-fw pi-circle-fill',
+                                command: () => this.changeTheme('mdc-dark-indigo')
+                            }
+                        ]
                     }
                 ]
             }
