@@ -42,7 +42,6 @@ export class SidebarComponent {
             if (!this.selectedSidebarItem.id) {
                 if (this.sidebarItems.length > 0) {
                     this.selectedSidebarItem = this.sidebarItems[0];
-
                     this.selectedSidebarItems = [this.selectedSidebarItem];
                     this.router.navigate(['/tabs', this.selectedSidebarItem.id]);
                 }
@@ -63,7 +62,7 @@ export class SidebarComponent {
             .then((id) => {
                 this.addItemInputVisible = false;
                 this.addItemInputValue = "";
-                this.selectedSidebarItem = {id: id, name: itemName};
+                this.selectedSidebarItem = {id: id, name: itemName, order: 0};
 
                 this.tabService.add({
                     name: "New Tab",
@@ -123,5 +122,13 @@ export class SidebarComponent {
     private setErrorDialog(message: string) {
         this.errorMessage = message;
         this.errorDialogVisible = true;
+    }
+
+    onReorderSidebar($event: any) {
+        this.sidebarItems.forEach((item, index) => {
+            item.order = index;
+        });
+
+        this.sidebarService.bulkUpdate(this.sidebarItems);
     }
 }

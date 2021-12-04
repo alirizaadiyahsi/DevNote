@@ -1,4 +1,8 @@
-<p-orderList [value]="sidebarItems" [(selection)]="selectedSidebarItems" (onSelectionChange)="gotoTabsPage($event)">
+<p-orderList [value]="sidebarItems"
+             [(selection)]="selectedSidebarItems"
+             (onSelectionChange)="gotoTabsPage($event)"
+             [dragdrop]="true"
+             (onReorder)="onReorderSidebar($event)">
     <ng-template pTemplate="header">
         <div>
             <button pButton

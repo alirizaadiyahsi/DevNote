@@ -3,7 +3,7 @@ import {devNoteDb} from "../data-access/dev-note-db";
 import {SidebarItem} from "../data-access/entities/sidebar-item";
 
 export class SidebarService {
-    getAll = liveQuery(() => devNoteDb.sidebarItems.toArray());
+    getAll = liveQuery(() => devNoteDb.sidebarItems.orderBy('order').toArray());
 
     add(sidebarItem: SidebarItem) {
         return devNoteDb.sidebarItems.filter(item => item.name === sidebarItem.name).count().then(count => {
@@ -23,6 +23,10 @@ export class SidebarService {
                 throw new Error("Sidebar item already exists!");
             }
         });
+    }
+
+    bulkUpdate(sidebarItems: SidebarItem[]) {
+        return devNoteDb.sidebarItems.bulkPut(sidebarItems);
     }
 
     remove(id: number, deleteCascade: boolean) {
