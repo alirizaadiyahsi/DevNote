@@ -3,7 +3,7 @@ import {devNoteDb} from "../data-access/dev-note-db";
 import {SidebarItem} from "../data-access/entities/sidebar-item";
 
 export class SidebarService {
-    getAll = liveQuery(() => devNoteDb.sidebarItems.orderBy('order').toArray());
+    getAll = liveQuery(() => devNoteDb.sidebarItems.toArray());
 
     add(sidebarItem: SidebarItem) {
         return devNoteDb.sidebarItems.filter(item => item.name === sidebarItem.name).count().then(count => {
