@@ -13,27 +13,43 @@ html, body {
     padding: 0 !important;
 }
 
+.page-container {
+    height: 100%;
+    margin-left: 320px;
+}
+
+.navbar{
+    margin-left: 320px;
+}
+
 .sidebar {
     height: 100%;
     padding: 0 !important;
+    width: 320px;
+    position: fixed;
 
-    .p-orderlist-list {
-        border: none !important;
-    }
+    .p-orderlist {
+        height: 100%;
+        margin-top: 46px;
 
-    .p-orderlist-item {
-        padding: 0 !important;
-        cursor: unset !important;
-    }
+        .p-orderlist-list {
+            height: 100%;
+            border: none !important;
+        }
 
-    .p-orderlist-controls {
-        display: none !important;
-    }
+        .p-orderlist-item {
+            padding: 0 !important;
+            cursor: unset !important;
+        }
 
-    .p-orderlist-header {
-        padding: 0 !important;
-        border: none !important;
-        border-bottom: 1px solid #e6e6e6 !important;
+        .p-orderlist-controls {
+            display: none !important;
+        }
+
+        .p-orderlist-header {
+            padding: 0 !important;
+            border: none !important;
+        }
     }
 }
 

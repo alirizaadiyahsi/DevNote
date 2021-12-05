@@ -1,11 +1,12 @@
-<div>
-    <app-navbar></app-navbar>
-</div>
-<div class="grid container">
-    <div class="col-2 border-right-1 border-black-alpha-10 sidebar">
+
+<div class="container">
+    <div class="border-right-1 border-black-alpha-10 sidebar">
         <app-sidebar></app-sidebar>
     </div>
-    <div class="col-10">
+    <div class="navbar">
+        <app-navbar></app-navbar>
+    </div>
+    <div class="page-container">
         <router-outlet></router-outlet>
     </div>
 </div>
