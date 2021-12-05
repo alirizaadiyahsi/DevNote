@@ -11,7 +11,7 @@ export class DevNoteDb extends Dexie {
 
     constructor() {
         super('devNoteDb');
-        this.version(4).stores({
+        this.version(5).stores({
             sidebarItems: '++id, name, children, order',
             tabItems: '++id, name, content, sidebarItemId',
             settings: '++id, key, value'
