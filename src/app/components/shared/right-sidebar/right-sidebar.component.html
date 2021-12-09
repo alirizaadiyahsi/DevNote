@@ -1,0 +1,21 @@
+<p-dataView [value]="events">
+    <ng-template pTemplate="header">
+        <div class="text-lg">Incoming Events</div>
+    </ng-template>
+    <ng-template let-event pTemplate="listItem">
+        <div class="col-12">
+            <div class="flex justify-content-between align-items-center pt-2">
+                <div class="font-bold pt-2">
+                    {{event.name}}
+                </div>
+                <div class="text-xs">
+                    {{event.date}} - {{event.time}}
+                </div>
+            </div>
+
+            <div class="pt-2 pb-2">
+                {{event.description}}
+            </div>
+        </div>
+    </ng-template>
+</p-dataView>

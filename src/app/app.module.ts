@@ -15,7 +15,8 @@ import {ConfirmationService} from 'primeng/api';
 import {SidebarComponent} from './components/shared/sidebar/sidebar.component';
 import {NavbarComponent} from './components/shared/navbar/navbar.component';
 import {TabsComponent} from './pages/tabs/tabs.component';
-
+import {ErrorDialogComponent} from './components/shared/common-dialogs/error-dialog/error-dialog.component';
+import {RightSidebarComponent} from './components/shared/right-sidebar/right-sidebar.component';
 
 // primeNG
 import {TreeTableModule} from 'primeng/treetable';
@@ -28,7 +29,7 @@ import {DialogModule} from 'primeng/dialog';
 import {OrderListModule} from "primeng/orderlist";
 import {TabViewModule} from "primeng/tabview";
 import {EditorModule} from "primeng/editor";
-import { ErrorDialogComponent } from './components/shared/common-dialogs/error-dialog/error-dialog.component';
+import {DataViewModule} from "primeng/dataview";
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { ErrorDialogComponent } from './components/shared/common-dialogs/error-d
         SidebarComponent,
         NavbarComponent,
         TabsComponent,
-        ErrorDialogComponent
+        ErrorDialogComponent,
+        RightSidebarComponent
     ],
     imports: [
         BrowserModule,
@@ -52,7 +54,8 @@ import { ErrorDialogComponent } from './components/shared/common-dialogs/error-d
         DialogModule,
         OrderListModule,
         TabViewModule,
-        EditorModule
+        EditorModule,
+        DataViewModule
     ],
     providers: [SidebarService, TabService, SettingService, ConfirmationService],
     bootstrap: [AppComponent]
